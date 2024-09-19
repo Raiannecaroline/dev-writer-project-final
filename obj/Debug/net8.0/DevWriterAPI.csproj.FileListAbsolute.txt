@@ -134,3 +134,4 @@ C:\Users\Raaia\Udemy\API\DevWriterAPI\DevWriterAPI\obj\Debug\net8.0\refint\DevWr
 C:\Users\Raaia\Udemy\API\DevWriterAPI\DevWriterAPI\obj\Debug\net8.0\DevWriterAPI.pdb
 C:\Users\Raaia\Udemy\API\DevWriterAPI\DevWriterAPI\obj\Debug\net8.0\DevWriterAPI.genruntimeconfig.cache
 C:\Users\Raaia\Udemy\API\DevWriterAPI\DevWriterAPI\obj\Debug\net8.0\ref\DevWriterAPI.dll
+C:\Users\Raaia\Udemy\API\DevWriterAPI\DevWriterAPI\obj\Debug\net8.0\DevWriterAPI.sourcelink.json

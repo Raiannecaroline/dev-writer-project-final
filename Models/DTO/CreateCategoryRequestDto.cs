@@ -1,8 +1,7 @@
-﻿namespace DevWriterAPI.Models.Domain
+﻿namespace DevWriterAPI.Models.DTO
 {
-    public class Category
+    public class CreateCategoryRequestDto
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string UrlHandle { get; set; }
     }
