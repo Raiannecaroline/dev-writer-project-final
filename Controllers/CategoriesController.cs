@@ -1,6 +1,7 @@
 ﻿using DevWriterAPI.Data;
 using DevWriterAPI.Models.Domain;
 using DevWriterAPI.Models.DTO;
+using DevWriterAPI.Repositories.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +13,11 @@ namespace DevWriterAPI.Controllers
     public class CategoriesController : ControllerBase
     {
 
-        private readonly BlogDbContext dbContext;
+        private readonly ICategoryRepository categoryRepository;
 
-        public CategoriesController(BlogDbContext dbContext)
+        public CategoriesController(ICategoryRepository categoryRepository)
         {
-            this.dbContext = dbContext;
+            this.categoryRepository = categoryRepository;
         }
 
 
@@ -30,9 +31,8 @@ namespace DevWriterAPI.Controllers
                 UrlHandle = request.UrlHandle
             };
 
-            await dbContext.Categories.AddAsync(category);
-            await dbContext.SaveChangesAsync();
-
+            await categoryRepository.CreateAsync(category);
+             
             /// <summary> Mapeando o Domain (Model) para o DTO </summary>
             var response = new CategoryDto
             {

@@ -1,4 +1,6 @@
 using DevWriterAPI.Data;
+using DevWriterAPI.Repositories.Implementation;
+using DevWriterAPI.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<BlogDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DevWriterConnection")));
+
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepositoy>();
 
 var app = builder.Build();
 
