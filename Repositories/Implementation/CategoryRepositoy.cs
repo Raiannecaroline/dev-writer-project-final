@@ -1,6 +1,7 @@
 ﻿using DevWriterAPI.Data;
 using DevWriterAPI.Models.Domain;
 using DevWriterAPI.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevWriterAPI.Repositories.Implementation
 {
@@ -20,6 +21,11 @@ namespace DevWriterAPI.Repositories.Implementation
             await dbContext.SaveChangesAsync();
 
             return category;
+        }
+
+        public async Task<IEnumerable<Category>> GetAllAsync()
+        {
+            return await dbContext.Categories.ToListAsync();
         }
     }
 }
