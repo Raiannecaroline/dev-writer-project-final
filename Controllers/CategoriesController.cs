@@ -23,7 +23,7 @@ namespace DevWriterAPI.Controllers
 
         /// <summary> Método para criar uma categoria </summary>
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request) 
+        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequestDto request) 
         {
             /// <summary> Mapeando o DTO para o Domain (Model) </summary>
             var category = new Category
@@ -68,6 +68,32 @@ namespace DevWriterAPI.Controllers
             /// <summary> Retornando o status 200 (OK) </summary>
             return Ok(response);
 
+        }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+
+        /// <summary> Método para buscar uma categoria por ID </summary>
+        public async Task<IActionResult> GetCategoriesById([FromRoute] Guid id)
+        {
+            var existCategories = await categoryRepository.GetById(id);
+
+            if (existCategories == null)
+            {
+                /// <summary> Retornando o status 404 (Not Found) </summary>
+                return NotFound();
+            }
+
+            /// <summary> Mapeando o Domain (Model) para o DTO </summary>
+            var respose = new CategoryDto
+            {
+                Id = existCategories.Id,
+                Name = existCategories.Name,
+                UrlHandle = existCategories.UrlHandle
+            };
+
+            /// <summary> Retornando o status 200 (OK) </summary>
+            return Ok(respose);
         }
     }
 }
