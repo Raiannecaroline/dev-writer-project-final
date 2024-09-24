@@ -1,5 +1,7 @@
 ﻿namespace DevWriterAPI.Models.Domain
 {
+
+    /// <summary> Modelagem da Classe de Post </summary>
     public class Post
     {
         public Guid Id { get; set; }

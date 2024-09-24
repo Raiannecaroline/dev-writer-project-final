@@ -15,6 +15,7 @@ namespace DevWriterAPI.Controllers
 
         private readonly ICategoryRepository categoryRepository;
 
+        /// <summary> Construtor da classe </summary>
         public CategoriesController(ICategoryRepository categoryRepository)
         {
             this.categoryRepository = categoryRepository;
@@ -94,6 +95,67 @@ namespace DevWriterAPI.Controllers
 
             /// <summary> Retornando o status 200 (OK) </summary>
             return Ok(respose);
+        }
+
+        /// <summary> Método para alterar (update) em uma categoria </summary>
+        [HttpPut]
+        [Route("{id:Guid}")]
+
+        /// <summary> Método para atualizar uma categoria </summary>
+        public async Task<IActionResult> EditCategory([FromRoute] Guid id, UpdateCategoryRequestDto request)
+        {
+            /// <summary> Buscando a categoria pelo ID </summary>
+            var category = new Category
+            {
+                Id = id,
+                Name = request.Name,
+                UrlHandle = request.UrlHandle
+            };
+
+            category = await categoryRepository.UpdateAsync(category);
+            
+            if (category == null)
+            {
+                /// <summary> Retornando o status 404 (Not Found) </summary>
+                return NotFound();
+            }
+
+            /// <summary> Mapeando o Domain (Model) para o DTO </summary>
+            var response = new CategoryDto
+            {
+                Id = category.Id,
+                Name = category.Name,
+                UrlHandle = category.UrlHandle
+            };
+
+            /// <summary> Retornando o status 200 (OK) </summary>
+            return Ok(response);
+            
+        }
+
+        /// <summary> Método para deletar uma categoria </summary>
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteCategorie([FromRoute] Guid id)
+        {
+           var categoryDelete = await categoryRepository.DeleteAsync(id);
+
+            if (categoryDelete == null)
+              {
+                /// <summary> Retornando o status 404 (Not Found) </summary>
+                return NotFound();
+              }
+
+            /// <summary> Mapeando o Domain (Model) para o DTO </summary>
+            var response = new CategoryDto
+            {
+                Id = categoryDelete.Id,
+                Name = categoryDelete.Name,
+                UrlHandle = categoryDelete.UrlHandle
+            };
+
+            /// <summary> Retornando o status 200 (OK) </summary>
+            return Ok(response);
         }
     }
 }

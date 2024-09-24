@@ -1,10 +1,9 @@
 ﻿namespace DevWriterAPI.Models.DTO
 {
 
-    /// <summary> DTO para a categoria </summary>
-    public class CategoryDto
+    /// <summary> DTO para atualizar a categoria </summary>
+    public class UpdateCategoryRequestDto
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string UrlHandle { get; set; }
     }
