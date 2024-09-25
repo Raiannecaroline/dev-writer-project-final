@@ -29,7 +29,7 @@ namespace DevWriterAPI.Repositories.Implementation
         /// <summary> Método para listar todos os Posts </summary>
         public async Task<IEnumerable<Post>> GetAllAsync()
         {
-           return await dbContext.Posts.ToListAsync();
+            return await dbContext.Posts.Include(x => x.Categories).ToListAsync();
         }
     }
 }

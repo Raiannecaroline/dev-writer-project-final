@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DevWriterAPI.Models.Domain;
 using DevWriterAPI.Repositories.Interface;
+using DevWriterAPI.Repositories.Implementation;
 
 namespace DevWriterAPI.Controllers
 {
@@ -11,10 +12,13 @@ namespace DevWriterAPI.Controllers
     public class PostsController : ControllerBase
     {
         private readonly IPostRepository postRepository;
+        private readonly ICategoryRepository categoryRepository;
 
-        public PostsController(IPostRepository postRepository)
+        public PostsController(IPostRepository postRepository,
+            ICategoryRepository categoryRepository)
         {
             this.postRepository = postRepository;
+            this.categoryRepository = categoryRepository;
         }
 
 
@@ -32,8 +36,18 @@ namespace DevWriterAPI.Controllers
                 UlHandler = request.UlHandler,
                 PublishAt = request.PublishAt,
                 AuthorAt = request.AuthorAt,
-                IsVisible = request.IsVisible
+                IsVisible = request.IsVisible,
+                Categories = new List<Category>()
             };
+
+            foreach (var categoryGuid in request.Categories)
+            {
+                var existingCategory = await categoryRepository.GetById(categoryGuid);
+                if (existingCategory is not null)
+                {
+                    post.Categories.Add(existingCategory);
+                }
+            }
 
             /// <summary> Salvando o Post no banco de dados </summary>
             post = await postRepository.CreateAsync(post);
@@ -49,7 +63,13 @@ namespace DevWriterAPI.Controllers
                 UlHandler = post.UlHandler,
                 PublishAt = post.PublishAt,
                 AuthorAt = post.AuthorAt,
-                IsVisible = post.IsVisible
+                IsVisible = post.IsVisible,
+                Categories = post.Categories.Select(x => new CategoryDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UrlHandle = x.UrlHandle
+                }).ToList()
             };
 
             /// <summary> Retornando a resposta Ok(200) </summary>
@@ -78,7 +98,13 @@ namespace DevWriterAPI.Controllers
                     UlHandler = post.UlHandler,
                     PublishAt = post.PublishAt,
                     AuthorAt = post.AuthorAt,
-                    IsVisible = post.IsVisible
+                    IsVisible = post.IsVisible,
+                    Categories = post.Categories.Select(x => new CategoryDto
+                     {
+                         Id = x.Id,
+                         Name = x.Name,
+                         UrlHandle = x.UrlHandle
+                     }).ToList()
                 });
             }
 

@@ -11,10 +11,12 @@
 using System;
 using System.Reflection;
 
+[assembly: Xunit.TestFramework("Xunit.DependencyInjection.DependencyInjectionTestFramework", "Xunit.DependencyInjection")]
+[assembly: Xunit.DependencyInjection.StartupType("DevWriterAPI.Startup")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("DevWriterAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+60678120b436b9779e03fc03016b6267e8fb710f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aec3691fb0b084fe90bc26d3281dae2c81f7fc53")]
 [assembly: System.Reflection.AssemblyProductAttribute("DevWriterAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DevWriterAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

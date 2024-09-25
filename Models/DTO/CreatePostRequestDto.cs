@@ -12,5 +12,7 @@
         public DateTime PublishAt { get; set; }
         public string AuthorAt { get; set; }
         public bool IsVisible { get; set; }
+
+        public Guid[] Categories { get; set; }
     }
 }
