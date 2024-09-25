@@ -55,5 +55,35 @@ namespace DevWriterAPI.Controllers
             /// <summary> Retornando a resposta Ok(200) </summary>
             return Ok(response);
         }
+
+        /// <summary> Listando todos os Posts (Publicações) </summary>
+        [HttpGet]
+        public async Task<IActionResult> GetAllPosts()
+        {
+            var posts = await postRepository.GetAllAsync();
+
+            /// <summary> Resposta da requisição </summary>
+            var response = new List<PostDto>();
+
+            /// <summary> Mapeando os Posts para o DTO </summary>
+            foreach (var post in posts)
+            {
+                response.Add(new PostDto
+                {
+                    Id = post.Id,
+                    Title = post.Title,
+                    Content = post.Content,
+                    Description = post.Description,
+                    ImageUrl = post.ImageUrl,
+                    UlHandler = post.UlHandler,
+                    PublishAt = post.PublishAt,
+                    AuthorAt = post.AuthorAt,
+                    IsVisible = post.IsVisible
+                });
+            }
+
+            /// <summary> Retornando a resposta Ok(200) </summary>
+            return Ok(response);
+        }
     }
 }

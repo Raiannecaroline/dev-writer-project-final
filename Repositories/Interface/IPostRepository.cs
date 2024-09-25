@@ -6,5 +6,8 @@ namespace DevWriterAPI.Repositories.Interface
     {
         /// <summary> Método para criar um novo Post </summary>
         Task<Post> CreateAsync(Post post);
+
+        /// <summary> Método para listar todos os Posts </summary>
+        Task<IEnumerable<Post>> GetAllAsync();
     }
 }

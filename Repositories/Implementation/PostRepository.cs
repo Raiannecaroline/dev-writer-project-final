@@ -1,6 +1,7 @@
 ﻿using DevWriterAPI.Data;
 using DevWriterAPI.Models.Domain;
 using DevWriterAPI.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevWriterAPI.Repositories.Implementation
 {
@@ -23,6 +24,12 @@ namespace DevWriterAPI.Repositories.Implementation
             await dbContext.Posts.AddAsync(post);
             await dbContext.SaveChangesAsync();
             return post;
+        }
+
+        /// <summary> Método para listar todos os Posts </summary>
+        public async Task<IEnumerable<Post>> GetAllAsync()
+        {
+           return await dbContext.Posts.ToListAsync();
         }
     }
 }
