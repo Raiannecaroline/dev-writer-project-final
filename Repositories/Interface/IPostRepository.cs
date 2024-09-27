@@ -9,5 +9,8 @@ namespace DevWriterAPI.Repositories.Interface
 
         /// <summary> Método para listar todos os Posts </summary>
         Task<IEnumerable<Post>> GetAllAsync();
+
+        /// <summary> Método para buscar um Post pelo ID </summary>
+        Task<Post?> GetByIdAsync(Guid id);
     }
 }

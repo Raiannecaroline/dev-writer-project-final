@@ -111,5 +111,43 @@ namespace DevWriterAPI.Controllers
             /// <summary> Retornando a resposta Ok(200) </summary>
             return Ok(response);
         }
+
+        /// <summary> Listando um Post (Publicação) pelo Id </summary>
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetPostById([FromRoute] Guid id)
+        {
+            /// <summary> Buscando o Post pelo Id </summary>
+            var post = await postRepository.GetByIdAsync(id);
+
+            if (post is null)
+            {
+                return NotFound();
+            }
+
+            /// <summary> Resposta da requisição </summary>
+            var response = new PostDto
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Content = post.Content,
+                Description = post.Description,
+                ImageUrl = post.ImageUrl,
+                UlHandler = post.UlHandler,
+                PublishAt = post.PublishAt,
+                AuthorAt = post.AuthorAt,
+                IsVisible = post.IsVisible,
+                Categories = post.Categories.Select(x => new CategoryDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UrlHandle = x.UrlHandle
+                }).ToList()
+            };
+
+            /// <summary> Retornando a resposta Ok(200) </summary>
+
+            return Ok(response);
+        }
     }
 }

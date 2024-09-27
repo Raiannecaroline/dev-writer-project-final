@@ -69,6 +69,5 @@ namespace DevWriterAPI.Repositories.Implementation
             return null;
 
         }
-        
     }
 }

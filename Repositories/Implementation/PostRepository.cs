@@ -31,5 +31,11 @@ namespace DevWriterAPI.Repositories.Implementation
         {
             return await dbContext.Posts.Include(x => x.Categories).ToListAsync();
         }
+
+        /// <summary> Método para buscar um Post pelo ID </summary>
+        public async Task<Post?> GetByIdAsync(Guid id)
+        {
+            return await dbContext.Posts.Include(x => x.Categories).FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }
