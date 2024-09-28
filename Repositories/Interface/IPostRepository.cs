@@ -12,5 +12,11 @@ namespace DevWriterAPI.Repositories.Interface
 
         /// <summary> Método para buscar um Post pelo ID </summary>
         Task<Post?> GetByIdAsync(Guid id);
+
+        /// <summary> Método para atualizar um Post </summary>
+        Task<Post?> UpdateAsync(Post post);
+
+        /// <summary> Método para deletar um Post </summary>
+        Task<Post?> DeleteAsync(Guid id);
     }
 }

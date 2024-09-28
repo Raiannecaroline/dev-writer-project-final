@@ -37,5 +37,48 @@ namespace DevWriterAPI.Repositories.Implementation
         {
             return await dbContext.Posts.Include(x => x.Categories).FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task<Post?> UpdateAsync(Post post)
+        {
+            var existingPost = await dbContext.Posts.Include(x => x.Categories)
+                .FirstOrDefaultAsync(x => x.Id == post.Id);
+
+            if (existingPost == null)
+            {
+                return null;
+            }
+
+            /// <summary> Atualizando as propriedades do Post </summary>
+            dbContext.Entry(existingPost).CurrentValues.SetValues(post);
+
+            /// <summary> Atualizando as categorias do Post </summary>
+            existingPost.Categories = post.Categories;
+
+            /// <summary> Salvando as alterações no banco de dados </summary>
+            await dbContext.SaveChangesAsync();
+
+            /// <summary> Retornando o Post atualizado </summary>
+            return post;
+        }
+
+        /// <summary> Método para deletar um Post </summary>
+        public async Task<Post?> DeleteAsync(Guid id)
+        {
+            /// <summary> Buscando o Post pelo ID </summary>
+            var existingPost = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == id);
+
+            /// <summary> Verificando se o Post existe </summary>
+            if (existingPost != null)
+            {
+                /// <summary> Removendo o Post </summary>
+                dbContext.Posts.Remove(existingPost);
+                await dbContext.SaveChangesAsync();
+                return existingPost;
+            }
+
+            /// <summary> Retornando nulo caso o Post não exista </summary>
+            return null;
+        }
+
     }
 }
