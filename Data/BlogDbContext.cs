@@ -13,5 +13,6 @@ namespace DevWriterAPI.Data
         /// <summary> Propriedades da classe </summary>
         public DbSet<Post> Posts { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Imagem> Imagens { get; set; }
     }
 }

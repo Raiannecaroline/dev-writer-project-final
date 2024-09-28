@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<BlogDbContext>(options =>
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepositoy>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IImagemRepository, ImagemRepository>();
 
 var app = builder.Build();
 
