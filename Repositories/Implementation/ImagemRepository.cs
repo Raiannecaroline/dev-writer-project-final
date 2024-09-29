@@ -7,22 +7,32 @@ namespace DevWriterAPI.Repositories.Implementation
 {
     public class ImagemRepository : IImagemRepository
     {
+        /// <summary> Injeção de Dependência </summary>
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly BlogDbContext dbContext;
 
+        /// <summary> Construtor </summary>
         public ImagemRepository(IWebHostEnvironment webHostEnvironment,
             IHttpContextAccessor httpContextAccessor,
             BlogDbContext dbContext)
         {
             this.webHostEnvironment = webHostEnvironment;
             this.httpContextAccessor = httpContextAccessor;
+            this.dbContext = dbContext;
         }
 
+        /// <summary> Retorna todas as imagens </summary>
+        public async Task<IEnumerable<Imagem>> GetAll()
+        {
+           return await dbContext.Imagens.ToListAsync();
+        }
+
+        /// <summary> Faz o Upload da Imagem </summary>
         public async Task<Imagem> Upload(IFormFile file, Imagem imagem)
         {
-            /// <summary> Salva a imagem no servidor </summary>
-            var pathLocal = Path.Combine(webHostEnvironment.WebRootPath, "Imagens", $"{imagem.FileName}{imagem.FileExtension}");
+            /// <summary> Cria o caminho e Salva a imagem no servidor </summary>
+            var pathLocal = Path.Combine(webHostEnvironment.ContentRootPath, "Imagens", $"{imagem.FileName}{imagem.FileExtension}");
             using var stream = new FileStream(pathLocal, FileMode.Create);
             await file.CopyToAsync(stream);
 

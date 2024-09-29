@@ -17,4 +17,8 @@
     <PackageReference Include="ZC.Tests.Core" Version="8.0.0.20711" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Imagens\" />
+  </ItemGroup>
+
 </Project>

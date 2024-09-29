@@ -18,6 +18,31 @@ namespace DevWriterAPI.Controllers
             this.imagemRepository = imagemRepository;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllImagens()
+        {
+            /// <summary> Retorna todas as imagens </summary>
+            var imagens = await imagemRepository.GetAll();
+
+            /// <summary> Mapeamento das imagens </summary>
+            var response = new List<ImagemDto>();
+            foreach (var imagem in imagens)
+            {
+                response.Add(new ImagemDto
+                {
+                    Id = imagem.Id,
+                    Title = imagem.Title,
+                    DateCreated = imagem.DateCreated,
+                    FileExtension = imagem.FileExtension,
+                    FileName = imagem.FileName,
+                    Url = imagem.Url
+                });
+            }
+
+            /// <summary> Retorno das imagens </summary>
+            return Ok(response);
+        }
+
         [HttpPost]
         public async Task<IActionResult> UploadImagem([FromForm] IFormFile file,
             [FromForm] string fileName, [FromForm] string title)
@@ -51,7 +76,7 @@ namespace DevWriterAPI.Controllers
                 };
 
                 /// <summary> Retorno da Imagem </summary>
-                return Ok(imagem);
+                return Ok(response);
             }
 
             return BadRequest(ModelState);

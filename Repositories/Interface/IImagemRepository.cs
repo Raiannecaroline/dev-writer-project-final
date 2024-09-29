@@ -6,5 +6,8 @@ namespace DevWriterAPI.Repositories.Interface
     {
         /// <summary> Upload da Imagem para o servidor </summary>
         Task<Imagem> Upload(IFormFile file, Imagem imagem);
+
+        /// <summary> Retorna todas as imagens </summary>
+        Task<IEnumerable<Imagem>> GetAll();
     }
 }

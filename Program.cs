@@ -2,6 +2,7 @@ using DevWriterAPI.Data;
 using DevWriterAPI.Repositories.Implementation;
 using DevWriterAPI.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,11 @@ app.UseCors(options =>
 });
 
 app.UseAuthorization();
+
+app.UseStaticFiles(new StaticFileOptions {
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Imagens")),
+    RequestPath = "/Imagens"
+});
 
 app.MapControllers();
 
