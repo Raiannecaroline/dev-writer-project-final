@@ -150,6 +150,44 @@ namespace DevWriterAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary> Listando um Post (Publicação) pelo URL Handle </summary>
+        [HttpGet]
+        [Route("{urlHandle}")]
+        public async Task<IActionResult> GetPostUrlById([FromRoute] string urlHandle)
+        {
+            /// <summary> Buscando o Post pelo URL Handle </summary>
+            var post = await postRepository.GetByUrlAsync(urlHandle);
+
+            if (post is null)
+            {
+                return NotFound();
+            }
+
+            /// <summary> Resposta da requisição </summary>
+            var response = new PostDto
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Content = post.Content,
+                Description = post.Description,
+                ImageUrl = post.ImageUrl,
+                UlHandler = post.UlHandler,
+                PublishAt = post.PublishAt,
+                AuthorAt = post.AuthorAt,
+                IsVisible = post.IsVisible,
+                Categories = post.Categories.Select(x => new CategoryDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UrlHandle = x.UrlHandle
+                }).ToList()
+            };
+
+            /// <summary> Retornando a resposta Ok(200) </summary>
+            return Ok(response);
+        }
+
+
         /// <summary> Atualizando um Post (Publicação) pelo Id </summary>
         [HttpPut]
         [Route("{id:Guid}")]

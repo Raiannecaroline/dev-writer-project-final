@@ -80,5 +80,9 @@ namespace DevWriterAPI.Repositories.Implementation
             return null;
         }
 
+        public async Task<Post?> GetByUrlAsync(string urlHandle)
+        {
+            return await dbContext.Posts.Include(x => x.Categories).FirstOrDefaultAsync(x => x.ImageUrl == urlHandle);
+        }
     }
 }

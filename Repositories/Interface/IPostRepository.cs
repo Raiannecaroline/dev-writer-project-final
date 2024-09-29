@@ -13,6 +13,9 @@ namespace DevWriterAPI.Repositories.Interface
         /// <summary> Método para buscar um Post pelo ID </summary>
         Task<Post?> GetByIdAsync(Guid id);
 
+        /// <summary> Método para buscar um Post pelo URL Handle </summary>
+        Task<Post?> GetByUrlAsync(string urlHandle);
+
         /// <summary> Método para atualizar um Post </summary>
         Task<Post?> UpdateAsync(Post post);
 
